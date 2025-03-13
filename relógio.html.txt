@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
     <title>Relógio de Notas</title>
     <style>
         body {
@@ -19,11 +20,21 @@
             font-size: 4rem;
             font-weight: bold;
         }
+        .timezone {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Relógio de Notas</h1>
     <div id="clock"></div>
+
+    <div class="timezone">
+        <h2>Relógios de Diferentes Fuso Horários</h2>
+        <div id="newyork"></div>
+        <div id="london"></div>
+        <div id="tokyo"></div>
+    </div>
     
     <script>
         function updateClock() {
@@ -34,8 +45,22 @@
             document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
         }
         
+        function updateTimezones() {
+            const now = new Date();
+
+            const newyorkTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+            const londonTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/London' }));
+            const tokyoTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+
+            document.getElementById('newyork').textContent = `Nova York: ${newyorkTime.getHours().toString().padStart(2, '0')}:${newyorkTime.getMinutes().toString().padStart(2, '0')}:${newyorkTime.getSeconds().toString().padStart(2, '0')}`;
+            document.getElementById('london').textContent = `Londres: ${londonTime.getHours().toString().padStart(2, '0')}:${londonTime.getMinutes().toString().padStart(2, '0')}:${londonTime.getSeconds().toString().padStart(2, '0')}`;
+            document.getElementById('tokyo').textContent = `Tóquio: ${tokyoTime.getHours().toString().padStart(2, '0')}:${tokyoTime.getMinutes().toString().padStart(2, '0')}:${tokyoTime.getSeconds().toString().padStart(2, '0')}`;
+        }
+
         setInterval(updateClock, 1000);
+        setInterval(updateTimezones, 1000);
         updateClock();
+        updateTimezones();
     </script>
 </body>
 </html>
